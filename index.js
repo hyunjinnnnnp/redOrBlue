@@ -6,28 +6,45 @@ const randomColor = document.querySelector(".js-randomColor"),
   downInput = document.querySelector(".js-choiceDown"),
   result = document.querySelector(".result"),
   countWin = document.querySelector(".win"),
-  countLose = document.querySelector(".lose");
+  countLose = document.querySelector(".lose"),
+  correctPop = document.querySelectorAll(".js-correctPop");
 
 randomNum = new Object();
 
-let win = 0,
-  lose = 0;
+const correctPopArray = [];
 
+correctPop.forEach((obj) => {
+  correctPopArray.push(obj);
+});
+
+let winScore = 0,
+  loseScore = 0;
+
+//콤보 연속적으로 correct면 PERFECT!
+
+//윈 늘어날 수록 원 크기 커진다
+//색깔은 가장 많이 맞춘 색?
+
+function correctPopDefault() {
+  correctPopArray.forEach((CP) => {
+    CP.classList.remove("showing");
+  });
+}
 function drawCountWin() {
-  countWin.innerHTML = win;
+  countWin.innerHTML = winScore;
 }
 function drawCountLose() {
-  countLose.innerHTML = lose;
+  countLose.innerHTML = loseScore;
 }
 function handleLeftClick(event) {
   if (randomNum.value === 1) {
     result.innerHTML = "correct";
-    win = win + 1;
+    winScore = winScore + 1;
     drawCountWin();
+    correctPopArray[0].classList.add("showing");
   } else {
-    console.log("fail");
     result.innerHTML = "fail";
-    lose = lose + 1;
+    loseScore = loseScore + 1;
     drawCountLose();
   }
 }
@@ -35,33 +52,36 @@ function handleLeftClick(event) {
 function handleRightClick(event) {
   if (randomNum.value === 2) {
     result.innerHTML = "correct";
-    win = win + 1;
+    winScore = winScore + 1;
     drawCountWin();
+    correctPopArray[1].classList.add("showing");
   } else {
     result.innerHTML = "fail";
-    lose = lose + 1;
+    loseScore = loseScore + 1;
     drawCountLose();
   }
 }
 function handleUpClick(event) {
   if (randomNum.value === 3) {
     result.innerHTML = "correct";
-    win = win + 1;
+    winScore = winScore + 1;
     drawCountWin();
+    correctPopArray[2].classList.add("showing");
   } else {
     result.innerHTML = "fail";
-    lose = lose + 1;
+    loseScore = loseScore + 1;
     drawCountLose();
   }
 }
 function handleDownClick(event) {
   if (randomNum.value === 4) {
     result.innerHTML = "correct";
-    win = win + 1;
+    winScore = winScore + 1;
     drawCountWin();
+    correctPopArray[3].classList.add("showing");
   } else {
     result.innerHTML = "fail";
-    lose = lose + 1;
+    loseScore = loseScore + 1;
     drawCountLose();
   }
 }
@@ -108,6 +128,7 @@ function paintDefaultColor() {
 }
 function init() {
   setInterval(paintRandomColor, 1000);
+  setInterval(correctPopDefault, 9000);
   paintDefaultColor();
   drawCountWin();
   drawCountLose();
